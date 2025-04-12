@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Resume</title>
+    <link rel="stylesheet" href="navbar.html">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+            padding-top: 80px; /* Add padding for fixed navbar */
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            text-align: center;
+            padding: 20px;
+            background: #2c3e50;
+            color: white;
+            border-radius: 5px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .profile-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 5px solid white;
+            background: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #2c3e50;
+            font-size: 14px;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .profile-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .header-content {
+            flex-grow: 1;
+        }
+
+        .header-content h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+
+        .header-content p {
+            margin: 5px 0;
+        }
+
+        .content-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .left-column {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .right-column {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .section {
+            margin: 0;
+            padding: 20px;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            transition: transform 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .section:hover {
+            transform: scale(1.01);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .skill-bar {
+            width: 100%;
+            background: #f0f0f0;
+            height: 20px;
+            border-radius: 10px;
+            margin: 10px 0;
+        }
+
+        .skill-level {
+            height: 100%;
+            background: #3498db;
+            border-radius: 10px;
+            transition: width 1s;
+        }
+
+        .project-card {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .skill-category {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .skill-category h3 {
+            margin-top: 0;
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
+        }
+
+        .skill-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .skill-list span {
+            background: #3498db;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.9em;
+        }
+
+        .download-btn {
+            position: fixed;
+            top: 20px;
+            background: #f30029;
+            color: white;
+            padding: 10px;
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 10%;
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+            z-index: 1001;
+        }
+
+        .download-btn.right {
+            right: 20px;
+        }
+
+        .download-btn.left {
+            left: 20px;
+        }
+
+        .download-btn:hover {
+            background: #1a252f;
+            transform: scale(1.1);
+        }
+
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+            margin-left: 100px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: -50px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #3498db;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 40px;
+            width: 100%;
+        }
+
+        .timeline-content {
+            background: white;
+            /* padding: 20px; */
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            position: relative;
+            width: 100%;
+            margin-left: 20px;
+        }
+        
+        .timeline-content:hover {
+            background-color: wheat;
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: -80px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #3498db;
+            border: 3px solid white;
+        }
+
+        .timeline-date {
+            position: absolute;
+            left: -100px;
+            top: 20px;
+            writing-mode: vertical-lr;
+            transform: rotate(180deg);
+            text-align: center;
+            font-weight: bold;
+            color: #3498db;
+            letter-spacing: 2px;
+            font-size: 0.9em;
+        }
+
+        .experience-title {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .experience-company {
+            color: #3498db;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .company-logo {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #3498db;
+        }
+
+        .experience-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .experience-list li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .experience-list li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: #3498db;
+        }
+        li {
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <button class="download-btn right" onclick="downloadPDF()" title="Download PDF">↓</button>
+    <button class="download-btn left" onclick="window.location.href='home.html'" title="Go to Home">←</button>
+    <div class="container">
+        <div class="header">
+            <div class="profile-image">
+                <img src="https://res.cloudinary.com/dv7eozzeh/image/upload/v1744471674/ChatGPT_Image_Mar_26_2025_02_15_15_PM_oy239m.png" alt="Sandeep Raj Saimon">
+            </div>
+            <div class="header-content">
+                <h1>SANDEEP RAJ SAIMON</h1>
+                <p>Senior Backend Engineer</p>
+                <p>📨 sandeeprajsaimon999@gmail.com | 📱 +91 9149122804</p>
+            </div>
+        </div>
+
+        <div class="content-wrapper">
+            <div class="left-column">
+                <div class="section" onclick="toggleSection('skills')">
+                    <h2>Skills</h2>
+                    <div id="skills" class="content">
+                        <div class="skill-category">
+                            <h3>PROGRAMMING LANGUAGES</h3>
+                            <div class="skill-list">
+                                <span>JavaScript</span>
+                                <span>Python</span>
+                                <span>Ruby</span>
+                            </div>
+                        </div>
+                        <div class="skill-category">
+                            <h3>FRAMEWORKS & LIBRARIES</h3>
+                            <div class="skill-list">
+                                <span>React</span>
+                                <span>Node.js</span>
+                                <span>Express</span>
+                                <span>Django</span>
+                                <span>Ruby On Rails</span>
+                            </div>
+                        </div>
+                        <div class="skill-category">
+                            <h3>DATABASES</h3>
+                            <div class="skill-list">
+                                <span>ElasticSearch</span>
+                                <span>MongoDB</span>
+                                <span>PostgreSQL</span>
+                                <span>MySQL</span>
+                                <span>Redis</span>
+                            </div>
+                        </div>
+                        <div class="skill-category">
+                            <h3>TOOLS & TECHNOLOGIES</h3>
+                            <div class="skill-list">
+                                <span>Git</span>
+                                <span>Docker</span>
+                                <span>AWS</span>
+                                <!-- <span>CI/CD</span>
+                                <span>Kubernetes</span> -->
+                            </div>
+                        </div>
+                        <div class="skill-category">
+                            <h3>MONITORING</h3>
+                            <div class="skill-list">
+                                <span>Prometheus</span>
+                                <span>Grafana</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section" onclick="toggleSection('education')">
+                    <h2>EDUCATION</h2>
+                    <div id="education" class="content">
+                        <h3>Bachelor of Computer Science</h3>
+                        <p>UNIVERSITY OF PETROLEUM AND ENERGY STUDIES (2016-2020)</p>
+                        <p>GPA: 7.8</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="right-column">
+                <div class="section" onclick="toggleSection('experience')">
+                    <h2>EXPERIENCE</h2>
+                    <div id="experience" class="content">
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <!-- <div class="timeline-date">2025</div> -->
+                                <div class="timeline-content">
+                                    <h3 class="experience-title">Senior Software Engineer</h3>
+                                    <div class="experience-company">
+                                        <img src="https://res.cloudinary.com/dv7eozzeh/image/upload/v1744470506/idrAhPjChj_1744470413406_rnii6m.jpg" alt="Procore Logo" class="company-logo">
+                                        Procore Technologies
+                                    </div>
+                                    <ul class="experience-list">
+                                        <li>Just Joined 🙈</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="timeline-item">
+                                <div class="timeline-date">MARCH 2025</div>
+                                <div class="timeline-content">
+                                    <h3 class="experience-title">Senior Backend Developer</h3>
+                                    <div class="experience-company">
+                                        <img src="https://res.cloudinary.com/dv7eozzeh/image/upload/v1744471131/Screenshot_2025-04-12_at_8.48.36_PM_pnhqrm.png" alt="Procore Logo" class="company-logo">
+                                        Kutumb</div>
+                                    <ul class="experience-list">
+                                        <li>Optimized API performance by introducing caching and event-based programming (SQS, SNS, Cron), reducing response time by 40% and scaling to handle 10x more concurrent requests</li>
+                                        <li>Revamped user-feed personalization with AWS Lambda and Elastic Search, reducing update times from 30 minutes to real-time</li>
+                                        <li>Leveraged Generative AI tools (OpenAI, Stable Diffusion, Eleven Labs) to generate 20000+ unique content pieces daily, increasing shares/downloads by 20% and DAU by 5%</li>
+                                        <li>Reduced database operations time by 30% and saved 50GB by optimizing indexes and implementing efficient query patterns</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="timeline-item">
+                                <div class="timeline-date">JULY 2023</div>
+                                <div class="timeline-content">
+                                    <h3 class="experience-title">Backend Developer</h3>
+                                    <div class="experience-company">
+                                        <img src="https://res.cloudinary.com/dv7eozzeh/image/upload/v1744471565/Screenshot_2025-04-12_at_8.55.59_PM_ghm7cb.png" alt="Flobiz Logo" class="company-logo">
+                                        Flobiz
+                                    </div>
+                                    <ul class="experience-list">
+                                        <li>Optimized API performance by introducing caching and event-based programming (SQS, SNS, Cron), reducing response time by 40% and scaling to handle 10x more concurrent requests</li>
+                                        <li>Revamped user-feed personalization with AWS Lambda and Elastic Search, reducing update times from 30 minutes to real-time</li>
+                                        <li>Leveraged Generative AI tools (OpenAI, Stable Diffusion, Eleven Labs) to generate 20000+ unique content pieces daily, increasing shares/downloads by 20% and DAU by 5%</li>
+                                        <li>Reduced database operations time by 30% and saved 50GB by optimizing indexes and implementing efficient query patterns</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="timeline-item">
+                                <div class="timeline-date">APRIL 2021</div>
+                                <div class="timeline-content">
+                                    <h3 class="experience-title">Backend Developer</h3>
+                                    <div class="experience-company">
+                                        <img src="https://res.cloudinary.com/dv7eozzeh/image/upload/v1744471180/Screenshot_2025-04-12_at_8.49.34_PM_prflv2.png" alt="GTGT Logo" class="company-logo">
+                                        GTGT
+                                    </div>
+                                    <ul class="experience-list">
+                                        <li>Optimized data access using Redis, reducing API response times by 20-30%</li>
+                                        <li>Headed the development of Feed-Service, integrating RabbitMQ for inter-service communication and cron jobs for database syncing</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section" onclick="toggleSection('projects')">
+                    <h2>PROJECTS</h2>
+                    <div id="projects" class="content">
+                        <div class="project-card">
+                            <h3>E-commerce Platform</h3>
+                            <p>Built a full-stack e-commerce platform using MERN stack</p>
+                            <p>Technologies: React, Node.js, MongoDB, Express</p>
+                        </div>
+                        <div class="project-card">
+                            <h3>AI Chat Bot</h3>
+                            <p>Developed an AI-powered chatbot using Python and TensorFlow</p>
+                            <p>Technologies: Python, TensorFlow, NLP, Docker</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script>
+        // Load navbar
+        // fetch('navbar.html')
+        //     .then(response => response.text())
+        //     .then(data => {
+        //         document.getElementById('navbar-placeholder').innerHTML = data;
+        //     });
+
+        function toggleSection(sectionId) {
+            const content = document.getElementById(sectionId);
+            content.classList.toggle('hidden');
+        }
+
+        // Animation for skill bars
+        document.addEventListener('DOMContentLoaded', function() {
+            const skillLevels = document.querySelectorAll('.skill-level');
+            skillLevels.forEach(skill => {
+                const width = skill.style.width;
+                skill.style.width = '0';
+                setTimeout(() => {
+                    skill.style.width = width;
+                }, 500);
+            });
+        });
+
+        function downloadPDF() {
+            const element = document.querySelector('.container');
+            const opt = {
+                margin: [10, 10, 10, 10],
+                filename: 'Sandeep_Raj_Saimon_Resume.pdf',
+                image: { type: 'jpeg', quality: 1 },
+                html2canvas: { 
+                    scale: 2,
+                    useCORS: true,
+                    logging: true,
+                    letterRendering: true
+                },
+                jsPDF: { 
+                    unit: 'px',
+                    format: [element.offsetWidth, element.offsetHeight],
+                    orientation: 'portrait'
+                }
+            };
+
+            // Generate PDF
+            html2pdf().set(opt).from(element).save();
+        }
+    </script>
+</body>
+</html>
