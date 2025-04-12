@@ -4,7 +4,7 @@
   "description": "Personal Portfolio Website",
   "main": "index.js",
   "scripts": {
-    "build": "mkdir -p dist && cp -r *.html dist/",
+    "build": "mkdir -p dist && cp -r *.html CNAME dist/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
