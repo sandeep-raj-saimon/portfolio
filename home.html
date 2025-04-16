@@ -60,6 +60,72 @@
             transform: translateY(-2px);
         }
 
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: #64ffda;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            z-index: 1001;
+        }
+
+        .mobile-menu-btn:hover {
+            color: #64ffda;
+        }
+
+        /* Dropdown Menu */
+        .dropdown-menu {
+            visibility: hidden;
+            position: fixed;
+            top: 60px;
+            left: 0;
+            right: 0;
+            background: rgba(10, 25, 47, 0.95);
+            backdrop-filter: blur(10px);
+            width: 100%;
+            padding: 1rem;
+            border-top: 1px solid rgba(100, 255, 218, 0.1);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(-10px);
+            pointer-events: none;
+        }
+
+        .dropdown-menu.active {
+            visibility: visible;
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .dropdown-menu .nav-links {
+            flex-direction: column;
+            gap: 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .dropdown-menu .nav-links a {
+            width: 100%;
+            text-align: center;
+            padding: 0.8rem;
+            display: block;
+            color: #64ffda;
+            text-decoration: none;
+            border: 1px solid rgba(100, 255, 218, 0.1);
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-menu .nav-links a:hover {
+            background: rgba(100, 255, 218, 0.1);
+            transform: translateY(-2px);
+        }
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -136,7 +202,7 @@
 
         .project-card:hover {
             transform: translateY(-5px);
-            border-color: #64ffda;
+            box-shadow: 0 10px 30px rgba(100, 255, 218, 0.2);
         }
 
         .social-links {
@@ -178,12 +244,204 @@
             transform: translateY(-5px);
             border-color: #64ffda;
         }
+
+        /* Mobile Devices (up to 768px) */
+        @media (max-width: 768px) {
+            .nav-container .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-container {
+                padding: 0 1rem;
+                position: relative;
+            }
+
+            .dropdown-menu .nav-links {
+                display: flex;
+            }
+        }
+
+        /* Desktop (769px and above) */
+        @media (min-width: 769px) {
+            .nav-container .nav-links {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: none;
+            }
+
+            .dropdown-menu {
+                display: none;
+            }
+        }
+
+        /* Landscape Mode for Mobile */
+        @media (max-height: 480px) and (orientation: landscape) {
+            .nav-container {
+                display: flex;
+            }
+
+            .nav-links {
+                flex-direction: row;
+                margin-top: 0.5rem;
+            }
+
+            .tech-stack {
+                margin-top: 0.5rem;
+            }
+
+            .projects {
+                margin-top: 1.5rem;
+            }
+        }
+
+        /* Tablets (481px to 768px) */
+        @media (min-width: 481px) and (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+                margin: 6rem auto 1.5rem;
+                width: 90%;
+            }
+
+            .name {
+                font-size: 1.8rem;
+            }
+
+            .subtitle {
+                font-size: 1.1rem;
+            }
+
+            .nav-links {
+                gap: 0.8rem;
+                margin-top: 1.2rem;
+            }
+
+            .nav-links a {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.95rem;
+            }
+
+            .tech-stack {
+                gap: 0.4rem;
+            }
+
+            .projects {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+        }
+
+        /* Laptops (769px to 1024px) */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .container {
+                padding: 2rem;
+                margin: 7rem auto 2rem;
+                width: 85%;
+            }
+
+            .name {
+                font-size: 2rem;
+            }
+
+            .subtitle {
+                font-size: 1.15rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .projects {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+            }
+        }
+
+        /* High DPI Screens */
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            .nav-links a:hover {
+                box-shadow: 0 8px 20px rgba(100, 255, 218, 0.3);
+            }
+
+            .project-card:hover {
+                box-shadow: 0 15px 40px rgba(100, 255, 218, 0.3);
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .container {
+                background: none;
+                box-shadow: none;
+                border: none;
+                margin: 0;
+                padding: 0;
+            }
+
+            .nav-links a {
+                color: #000;
+                border: none;
+                padding: 0;
+            }
+
+            .tech-stack span {
+                background: none;
+                color: #000;
+                border: none;
+            }
+
+            .project-card {
+                break-inside: avoid;
+                page-break-inside: avoid;
+                border: 1px solid #000;
+                box-shadow: none;
+            }
+        }
+
+        /* Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            .nav-links a:hover {
+                transform: none;
+            }
+
+            .project-card:hover {
+                transform: none;
+            }
+        }
+
+        /* Dark Mode */
+        @media (prefers-color-scheme: dark) {
+            .container {
+                background: rgba(10, 25, 47, 0.98);
+            }
+
+            .project-card {
+                background: rgba(17, 34, 64, 0.95);
+            }
+        }
     </style>
 </head>
 <body>
     <nav class="navbar">
         <div class="nav-container">
             <a href="#" class="nav-logo">&lt;SRS /&gt;</a>
+            <button class="mobile-menu-btn" aria-label="Toggle menu" aria-expanded="false">
+                <span class="menu-icon">☰</span>
+            </button>
+            <div class="nav-links">
+                <a href="#about">About</a>
+                <a href="#projects">Projects</a>
+                <a href="#articles">Articles</a>
+                <a href="resume.html">Resume</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </div>
+        <div class="dropdown-menu">
             <div class="nav-links">
                 <a href="#about">About</a>
                 <a href="#projects">Projects</a>
@@ -280,6 +538,53 @@
             </div>
         </section>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const dropdownMenu = document.querySelector('.dropdown-menu');
+            const menuIcon = mobileMenuBtn.querySelector('.menu-icon');
+
+            // Function to toggle menu
+            function toggleMenu() {
+                const isActive = dropdownMenu.classList.toggle('active');
+                mobileMenuBtn.setAttribute('aria-expanded', isActive);
+                menuIcon.textContent = isActive ? '✕' : '☰';
+                // Update nav-links display
+                const navLinks = document.querySelector('.dropdown-menu .nav-links');
+                navLinks.style.display = 'flex';
+            }
+
+            // Toggle menu on button click
+            mobileMenuBtn.addEventListener('click', function(e) {
+                console.log("clicked");
+                e.preventDefault();
+                e.stopPropagation();
+                toggleMenu();
+            });
+
+            // Close menu when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.navbar') && dropdownMenu.classList.contains('active')) {
+                    toggleMenu();
+                }
+            });
+
+            // Close menu when clicking a link
+            dropdownMenu.querySelectorAll('a').forEach(function(link) {
+                link.addEventListener('click', function() {
+                    toggleMenu();
+                });
+            });
+
+            // Close menu on escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && dropdownMenu.classList.contains('active')) {
+                    toggleMenu();
+                }
+            });
+        });
+    </script>
 </body>
 </html>
 

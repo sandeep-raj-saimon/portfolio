@@ -297,11 +297,154 @@
         li {
             font-size: 14px;
         }
+
+        /* Mobile Devices (up to 768px) */
+        @media (max-width: 768px) {
+            .nav-container .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-container {
+                padding: 0 1rem;
+                position: relative;
+            }
+
+            .dropdown-menu .nav-links {
+                display: flex;
+            }
+
+            .container {
+                padding: 1.5rem;
+                margin: 6rem auto 1.5rem;
+                width: 90%;
+            }
+
+            .content-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .header {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+
+            .profile-image {
+                margin: 0 auto;
+            }
+        }
+
+        /* Desktop (769px and above) */
+        @media (min-width: 769px) {
+            .nav-container .nav-links {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: none;
+            }
+
+            .dropdown-menu {
+                display: none;
+            }
+        }
+
+        /* Landscape Mode for Mobile */
+        @media (max-height: 480px) and (orientation: landscape) {
+            .nav-container {
+                display: flex;
+            }
+
+            .nav-links {
+                flex-direction: row;
+                margin-top: 0.5rem;
+            }
+
+            .container {
+                margin: 4rem auto;
+                padding: 1rem;
+            }
+        }
+
+        /* Tablets (481px to 768px) */
+        @media (min-width: 481px) and (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+                margin: 6rem auto 1.5rem;
+                width: 90%;
+            }
+
+            .nav-links {
+                gap: 0.8rem;
+                margin-top: 1.2rem;
+            }
+
+            .nav-links a {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.95rem;
+            }
+        }
+
+        /* Laptops (769px to 1024px) */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .container {
+                padding: 2rem;
+                margin: 7rem auto 2rem;
+                width: 85%;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+        }
+
+        /* High DPI Screens */
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            .nav-links a:hover {
+                box-shadow: 0 8px 20px rgba(100, 255, 218, 0.3);
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .container {
+                background: none;
+                box-shadow: none;
+                border: none;
+                margin: 0;
+                padding: 0;
+            }
+
+            .nav-links a {
+                color: #000;
+                border: none;
+                padding: 0;
+            }
+        }
+
+        /* Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            .nav-links a:hover {
+                transform: none;
+            }
+        }
+
+        /* Dark Mode */
+        @media (prefers-color-scheme: dark) {
+            .container {
+                background: rgba(10, 25, 47, 0.98);
+            }
+        }
     </style>
 </head>
 <body>
     <button class="download-btn right" onclick="downloadPDF()" title="Download PDF">↓</button>
     <button class="download-btn left" onclick="window.location.href='home.html'" title="Go to Home">←</button>
+
     <div class="container">
         <div class="header">
             <div class="profile-image">
